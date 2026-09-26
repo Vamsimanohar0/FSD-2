@@ -1,0 +1,116 @@
+Redux Counter Application
+Project Structure
+Create the following structure:
+src
+│
+├── components
+│   └── Counter.jsx
+│
+├── redux
+│   ├── store.js
+│   └── counterSlice.js
+│
+├── App.jsx
+├── App.css
+└── main.jsx
+
+Create Redux Slice
+src/redux/counterSlice.js
+import { createSlice } from "@reduxjs/toolkit";
+
+const counterSlice = createSlice({
+  name: "counter",
+
+  initialState: {
+    value: 0,
+  },
+
+  reducers: {
+    increment: (state) => {
+      state.value += 1;
+    },
+
+    decrement: (state) => {
+      state.value -= 1;
+    },
+  },
+});
+
+export const { increment, decrement } = counterSlice.actions;
+
+export default counterSlice.reducer;
+
+Create Redux Store
+src/redux/store.js
+import { configureStore } from "@reduxjs/toolkit";
+import counterReducer from "./counterSlice";
+
+export const store = configureStore({
+  reducer: {
+    counter: counterReducer,
+  },
+});
+
+Connect Redux to React
+src/main.jsx
+import { StrictMode } from "react";
+import { createRoot } from "react-dom/client";
+import { Provider } from "react-redux";
+
+import App from "./App.jsx";
+import { store } from "./redux/store.js";
+
+createRoot(document.getElementById("root")).render(
+  <StrictMode>
+    <Provider store={store}>
+      <App />
+    </Provider>
+  </StrictMode>
+);
+
+Create Counter Component
+src/components/Counter.jsx
+import { useSelector, useDispatch } from "react-redux";
+import { increment, decrement } from "../redux/counterSlice";
+
+function Counter() {
+  const count = useSelector((state) => state.counter.value);
+
+  const dispatch = useDispatch();
+
+  return (
+    <div>
+      <h1>Redux Counter</h1>
+
+      <h2>{count}</h2>
+
+      <button onClick={() => dispatch(increment())}>
+        +
+      </button>
+
+      <button onClick={() => dispatch(decrement())}>
+        -
+      </button>
+    </div>
+  );
+}
+
+export default Counter;
+
+ 
+
+
+App Component
+src/App.jsx
+import "./App.css";
+import Counter from "./components/Counter";
+
+function App() {
+  return (
+    <div>
+      <Counter />
+    </div>
+  );
+}
+
+export default App;
