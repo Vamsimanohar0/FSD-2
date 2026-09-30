@@ -16,6 +16,25 @@ app.get("/college",(req,res)=>{
     });
 })
 
+const user = [
+    {
+        id:1,
+        name:"vamsi"
+    },
+    {
+        id:2,
+        name:"siva"
+    }
+];
+
+app.get("/userInfo",(req,res)=>{
+    res.json(user);
+})
+
+app.get("/userInfo/:id",(req,res)=>{
+    
+})
+
 app.listen(5002,()=>{
     console.log("Server running");
 })
