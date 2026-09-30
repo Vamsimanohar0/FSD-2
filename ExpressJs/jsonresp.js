@@ -32,7 +32,16 @@ app.get("/userInfo",(req,res)=>{
 })
 
 app.get("/userInfo/:id",(req,res)=>{
+    const id = parseInt(req.params.id, 10);
+    const foundUser = user.find(u => u.id === id); 
     
+    
+    if (foundUser) {
+        res.json(foundUser); 
+    } else {
+        res.status(404).json({ error: "User not found" });
+    }
+
 })
 
 app.listen(5002,()=>{
