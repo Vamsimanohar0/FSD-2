@@ -44,6 +44,13 @@ app.get("/userInfo/:id",(req,res)=>{
 
 })
 
+app.post("/addUser",(req,res)=>{
+    const s = req.body;
+    user.push(s);
+    res.status(201).send("Student added");
+    console.log("Student addded");
+})
+
 app.listen(5002,()=>{
     console.log("Server running");
 })
